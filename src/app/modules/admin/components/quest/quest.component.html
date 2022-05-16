@@ -1,0 +1,242 @@
+<div class="container" id="contain">
+  <button (click)="clickAdd()" type="button"  class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Add Question
+  </button>
+
+  <button class="btn btn-success m-2" routerLink="../quiz" >Start Quiz</button>
+  
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup] ="formValue">
+            <div class="row">
+              <div class="mb-2">
+                <div class="form-outline">
+                  <label for="question" class="form-label">Question</label>
+                  <input type="text" id="question" class="form-control form-control-lg" formControlName="question">
+                </div>
+              </div>
+            </div>
+  
+            <div class="row">
+              <div class="mb-2">
+                <div class="form-outline">
+                  <label for="optionA" class="form-label">A.</label>
+                  <input type="text" id="optionA" class="form-control form-control-lg" formControlName="optionA">
+                </div>
+              </div>
+            </div>
+  
+            <div class="row">
+              <div class="mb-2">
+                <div class="form-outline">
+                  <label for="optionB" class="form-label">B.</label>
+                  <input type="text" id="optionB" class="form-control form-control-lg" formControlName="optionB">
+                </div>
+              </div>
+            </div>
+  
+            <div class="row">
+              <div class="mb-2">
+                <div class="form-outline">
+                  <label for="optionC" class="form-label">C.</label>
+                  <input type="text" id="optionC" class="form-control form-control-lg" formControlName="optionC">
+                </div>
+              </div>
+            </div>
+  
+            <div class="row">
+              <div class="mb-2">
+                <div class="form-outline">
+                  <label for="optionD" class="form-label">D.</label>
+                  <input type="text" id="optionD" class="form-control form-control-lg" formControlName="optionD">
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="mb-2">
+                <div class="form-outline">
+                  <label for="correctAns" class="form-label">Ans.</label>
+                  <input type="text" id="correctAns" class="form-control form-control-lg" formControlName="correctAns" placeholder="Example : A , B , C , D">
+                </div>
+              </div>
+            </div>
+  
+          </form>
+  
+        </div>
+        <div class="modal-footer">
+          <button id="cancel" type="button" class="btn btn-secondary" data-dismiss="modal" >Close</button>
+          <button *ngIf= "showAdd" type="button" class="btn btn-primary" (click)= "postDetails()" >Save</button>
+          <button *ngIf= "showUpdate" type="button" class="btn btn-primary" (click)= "updateDetails()" >Update</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container col-sm-12">
+  
+<table class="table mt-3"> 
+ <thead>
+   <td> Id</td>
+   <td> Question</td>
+   <td> Option A</td>
+   <td> Option B</td>
+   <td> Option C</td>
+   <td> Option D</td>
+   <td> Answer</td>
+
+
+ </thead>
+  <tbody>
+      <tr *ngFor="let row of questData let i=index">
+        <td> {{i+1}}</td>
+        <td> {{row.question}}</td>
+        <td> {{row.optionA}}</td>
+        <td> {{row.optionB}}</td>
+        <td> {{row.optionC}}</td>
+        <td> {{row.optionD}}</td>
+        <td> {{row.correctAns}}</td>
+
+          <td>
+              <button (click)="onEdit(row)"  type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-success btn-sm">Edit</button>
+              <button (click)="deleteQuest(row)" class="btn btn-danger mx-3 btn-sm">Delete</button>
+          </td>
+
+      </tr>
+  </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+  <!-- import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { ApiService } from '../shared/api.service';
+import { EmployeeModel } from './employee-dash board.model';
+@Component({
+  selector: 'app-employee-dashboard',
+  templateUrl: './employee-dashboard.component.html',
+  styleUrls: ['./employee-dashboard.component.css']
+})
+export class EmployeeDashboardComponent implements OnInit {
+
+
+  formValue !: FormGroup;
+  employeeModelObj: EmployeeModel = new EmployeeModel();
+  employeeData !: any;
+  showAdd !: boolean;
+  showUpdate !:boolean;
+  constructor(private formbuilder: FormBuilder, private api: ApiService) { }
+
+  ngOnInit(): void {
+    this.formValue = this.formbuilder.group({
+      Question: [''],
+      option1: [''],
+      option2: [''],
+      option3: [''],
+      option4: [''],
+  
+        })
+    this.getAllEmployee();
+     }
+  clickAddEmployee(){
+       this.formValue.reset();
+       this.showAdd=true;
+       this.showUpdate=false;
+     }
+
+   postEmployeeDetails() { 
+    this.employeeModelObj.Question = this.formValue.value.Question;
+    this.employeeModelObj.option1 = this.formValue.value.option1;
+    this.employeeModelObj.option2 = this.formValue.value.option2;
+    this.employeeModelObj.option3 = this.formValue.value.option3;
+    this.employeeModelObj.option4 = this.formValue.value.option4;
+    // this.employeeModelObj.option5 = this.formValue.value.option5;
+
+    this.api.postEmploye(this.employeeModelObj)
+      .subscribe(res => {
+        console.log(res);
+        alert("Question Added Successfully");
+        let ref = document.getElementById('cancel');
+        ref?.click();
+        this.formValue.reset();
+       this.getAllEmployee();
+         },
+        err=> {
+          alert("Something Went wrong")
+        })
+     } 
+  
+    getAllEmployee(){
+      this.api.getEmployee()
+      .subscribe(res=>{
+        this.employeeData = res;
+      })
+    } 
+    deleteEmployee(row: any){
+      this.api.deleteEmployee(row.id)
+      .subscribe(res=>{
+        alert("Question Deleted")
+        this.getAllEmployee();
+      })
+    }
+    
+
+  onEdit(row: any)
+  {
+  this.showAdd=false;
+  this.showUpdate=true;
+   this.employeeModelObj.id = row.id;
+  this.formValue.controls['Question'].setValue(row.Question);
+    this.formValue.controls['option1'].setValue(row.option1);
+   this.formValue.controls['option2'].setValue(row.option2);
+   this.formValue.controls['option3'].setValue(row.option3);
+   this.formValue.controls['option4'].setValue(row.option4);
+  }
+  updateEmployeeDetails() {
+
+  this.employeeModelObj.Question = this.formValue.value.Question;
+  this.employeeModelObj.option1 = this.formValue.value.option1;
+  this.employeeModelObj.option2 = this.formValue.value.option2;
+  this.employeeModelObj.option3 = this.formValue.value.option3;
+  this.employeeModelObj.option4 = this.formValue.value.option4;
+ 
+  this.api.updateEmployee(this.employeeModelObj,this.employeeModelObj.id)
+   .subscribe(res=>{
+     alert("Updated Successfully");
+     let ref= document.getElementById('cancel');
+     ref?.click();
+     this.formValue.reset();
+    this.getAllEmployee();
+    })  
+      } 
+ logout(){
+  console.log('Logout');
+  // localStorage.setItem('access','false');
+  }
+
+  } 
+} -->
+
+ 
+
+
+
+
+
+

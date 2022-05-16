@@ -1,0 +1,87 @@
+<div class="container" *ngIf="!showData" id="body">
+  <div class="card">
+    <div class="justify-content-center" id="name">
+      Hello {{ name }}
+    </div>
+
+    <form [formGroup]="quizForm">
+      <div class="container">
+        <div class="row">
+          <div class="mb-2">
+
+          
+            <div class="form-group">
+              <p class="h5"> {{ quizData.question }} </p>
+              <ol type="A">
+                <li>
+                  <input id="option_a" type="radio" value="A" name="options" formControlName="options" (click)="checkAns()">
+                  <label class="mx-2"> {{ quizData.optionA }}</label>
+                </li>
+
+                <li>
+                  <input id="option_b" type="radio" value="B" name="options" formControlName="options" (click)="checkAns1()">
+                  <label class="mx-2"> {{ quizData.optionB }}</label>
+                </li>
+
+                <li>
+                  <input id="option_c" type="radio" value="C" name="options" formControlName="options" (click)="checkAns2()">
+                  <label class="mx-2"> {{ quizData.optionC }}</label>
+                </li>
+
+                <li>
+                  <input id="option_d" type="radio" value="D" name="options" formControlName="options" (click)="checkAns3()">
+                  <label class="mx-2"> {{ quizData.optionD }}</label>
+                </li>
+              </ol>
+
+              <div class="invalid-feedback" *ngIf="f['options'].hasError('required')">
+                Please choose and option
+              </div>
+            </div>
+
+
+            <button class="btn btn-primary m-2" [disabled]="!quizForm.valid" (click)="onSubmit()">Submit</button>
+            <button  class="btn btn-primary m-2" *ngIf="showNext"  (click)="onNext()">Next</button>
+
+          </div>
+        </div>
+
+
+      </div>
+
+
+
+
+
+      <p>{{data}}</p>
+
+    </form>
+  </div>
+</div>
+
+<div class="container" id="contain" *ngIf="showData">
+  <div class="card">
+    <div class=" justify-content-center" id="score">
+      <h1 class="m-4">Your Quiz is complete </h1>
+      <h2 class="m-4">Here are your scores</h2>
+      <h2 class="m-4">Score : {{this.score}}</h2>
+      <h3 class="m-4">Questions Attempted : {{this.quizInfo.length}}</h3>
+      <h3 class="m-4">Right Answers : {{this.right}} </h3>
+      <h3 class="m-4">Wrong Answers : {{this.wrong}} </h3>
+
+    </div>
+  </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+

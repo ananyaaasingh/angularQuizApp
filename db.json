@@ -1,0 +1,53 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "question": "Which of the following is not built-in pipe in Angular?",
+      "optionA": "DatePipe",
+      "optionB": "CurrencyPipe",
+      "optionC": "DataPipe",
+      "optionD": "PercentPipe",
+      "correctAns": "C"
+    },
+    {
+      "id": 2,
+      "question": "What decorator is used to make a class a service?",
+      "optionA": "Injector",
+      "optionB": "Service",
+      "optionC": "Injectible",
+      "optionD": "Component",
+      "correctAns": "C"
+    },
+    {
+      "id": 3,
+      "question": "If I write <button (click) = \"onClick ()\"> in a template, I use?",
+      "optionA": "Interpolation",
+      "optionB": "Property Binding",
+      "optionC": "Event Binding",
+      "optionD": "Two-way Binding",
+      "correctAns": "C"
+    },
+    {
+      "id": 4,
+      "question": "What is the @Output decorator for?",
+      "optionA": "Share data from a parent component to a child",
+      "optionB": "Share data from a child component to a parent",
+      "optionC": "Use event binding",
+      "optionD": "Use Service",
+      "correctAns": "B"
+    },
+    {
+      "id": 5,
+      "question": "Which of the following directive allows us to use form?",
+      "optionA": "ng-app",
+      "optionB": "ng-form",
+      "optionC": "ng-controller",
+      "optionD": "ng-bind",
+      "correctAns": "B"
+    }
+  ],
+  "comments": [],
+  "profile": {
+    "name": "typicode"
+  }
+}
